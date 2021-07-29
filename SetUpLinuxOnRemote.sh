@@ -71,15 +71,15 @@ fi
 
 # Installing miniconda according to user's preference
 if [[ ${CONDA} == "conda" ]]; then
-  printf "Downloading, installing, and configuring miniconda"
+  printf "\nMiniconda's default path is going to be "$HOME/miniconda".\n"
   #Download the latest shell script
-  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh $HOME/mybin/
+  wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P $HOME/mybin/
 
   #Make the miniconda installation script executable
   chmod +x $HOME/mybin/Miniconda3-latest-Linux-x86_64.sh
 
   #Run miniconda installation script
-  $HOME/mybin/Miniconda3-latest-Linux-x86_64.sh
+  $HOME/mybin/Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
   rm $HOME/mybin/Miniconda3-latest-Linux-x86_64.sh
 
   # Let's config and install some packages

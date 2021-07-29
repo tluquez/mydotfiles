@@ -77,4 +77,4 @@ if ! shopt -oq posix; then
 fi
 
 # Path
-export PATH=$HOME/mybin:$HOME/mybin/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/dell/srvadmin/bin
+export PATH=$HOME/mybin:$HOME/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/dell/srvadmin/bin
