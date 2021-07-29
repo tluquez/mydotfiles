@@ -1,5 +1,5 @@
 # Custom functions
-## Extract
+## Extract. Provided to me by Michael Wainberg
 function extract {
  if [ -z "$1" ]; then
     # display usage if no parameters given
