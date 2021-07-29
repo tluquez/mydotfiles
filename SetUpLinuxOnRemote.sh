@@ -25,6 +25,7 @@ if [[ ! -d $MYDOTFILES ]]; then
 fi
 
 # Symlink dot files
+printf "Your symlinks are:\n"
 ln -sfv $MYDOTFILES/my.bashrc_linux $HOME/.bashrc
 ln -sfv $MYDOTFILES/my.bash_profile $HOME/.bash_profile
 ln -sfv $MYDOTFILES/my.bash_prompt $HOME/.bash_prompt
@@ -49,10 +50,10 @@ ln -sfv $MYDOTFILES/my.vimrc $HOME/.vimrc
 #Set up .tmux.conf depending on the version
 if [[ ! -f $HOME/.tmux.conf ]]; then
   if [[ `tmux -V` < 3  ]]; then
-    printf "\nGetting .tmux.conf version 2\n"
+    printf "Getting .tmux.conf version 2\n"
     ln -sfv $MYDOTFILES/.tmux.conf.V2 $HOME/.tmux.conf
   else
-    printf "\nGetting .tmux.conf version 3\n"
+    printf "Getting .tmux.conf version 3\n"
     ln -sfv $MYDOTFILES/.tmux.conf.V3 $HOME/.tmux.conf
   fi
 fi
