@@ -71,7 +71,6 @@ if [[ ${CONDA} == "conda" ]]; then
   printf "\nLet's rock miniconda!\n"
   if [[ -d $HOME/miniconda3/bin ]]; then
     printf "\nMiniconda already exists at "$HOME/miniconda3". If you want to delete and re-install miniconda3 run $0 conda_reinstall.\n* Aborting repeated miniconda3 installation. *\n"
-    exit 0
   else
     printf "\nMiniconda's default path is going to be "$HOME/miniconda".\n"
     #Download the latest shell script
