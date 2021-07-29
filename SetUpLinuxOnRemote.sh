@@ -18,10 +18,10 @@ fi
 # Git clone mydotfiles
 MYDOTFILES="$HOME/mydotfiles"
 if [[ ! -d $MYDOTFILES ]]; then
-  git clone https://github.com/tluquez/mydotfiles.git $MYDOTFILES
+  git clone -q https://github.com/tluquez/mydotfiles.git $MYDOTFILES
   else
   rm -rf $MYDOTFILES
-  git clone https://github.com/tluquez/mydotfiles.git $MYDOTFILES
+  git clone -q https://github.com/tluquez/mydotfiles.git $MYDOTFILES
 fi
 
 # Symlink dot files
