@@ -1,6 +1,5 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# $HOME/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc) for examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -40,366 +39,46 @@ if [[ ! -d "$HOME/mybin" ]]; then
   mkdir -p $HOME/mybin
 fi
 
-# Set up .inputrc
-if [ ! -f ~/.inputrc ]; then
-cat << "EOT" >> ~/.inputrc
-# https://askubuntu.com/a/59855/854504
-$include /etc/inputrc
-
-# https://unix.stackexchange.com/a/53844/302735
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-
-set completion-ignore-case on
-set show-all-if-ambiguous on
-set echo-control-characters off
-# To enable seamless pasting into python console
-set enable-bracketed-paste off
-EOT
-fi
-
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# Set a fancy prompt
-if [ -f ~/.bash_prompt ]; then
-    . ~/.bash_prompt
-  else
-    cat << "EOT" >> ~/.bash_prompt
-# @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
-# Shamelessly copied from https://github.com/gf3/dotfiles
-# Screenshot: http://i.imgur.com/s0Blh.png
-
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-  export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-  export TERM=xterm-256color
-fi
-
-if tput setaf 1 &> /dev/null; then
-  tput sgr0
-  if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
-    # Changed these colors to fit Solarized theme
-    MAGENTA=$(tput setaf 125)
-    ORANGE=$(tput setaf 166)
-    GREEN=$(tput setaf 64)
-    PURPLE=$(tput setaf 61)
-    WHITE=$(tput setaf 244)
-  else
-    MAGENTA=$(tput setaf 5)
-    ORANGE=$(tput setaf 4)
-    GREEN=$(tput setaf 2)
-    PURPLE=$(tput setaf 1)
-    WHITE=$(tput setaf 7)
-  fi
-  BOLD=$(tput bold)
-  RESET=$(tput sgr0)
-else
-  MAGENTA="\033[1;31m"
-  ORANGE="\033[1;33m"
-  GREEN="\033[1;32m"
-  PURPLE="\033[1;35m"
-  WHITE="\033[1;37m"
-  BOLD=""
-  RESET="\033[m"
-fi
-
-export MAGENTA
-export ORANGE
-export GREEN
-export PURPLE
-export WHITE
-export BOLD
-export RESET
-
-function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
-}
-
-function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
-}
-
-# Defining prompt colors
-export PS1="\[${BOLD}${MAGENTA}\]\u\[$WHITE\]@\[$ORANGE\]\h:\[$GREEN\]\w\[$WHITE\]\$"
-export PS2="\[$ORANGE\]→ \[$RESET\]"
-EOT
-fi
-
-# enable color support of ls and also add handy aliases
+# enable color support of ls
 export LS_COLORS='no=00:fi=00:di=34:ln=36:pi=40;33:so=35:do=35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
 
-alias ls='ls --color=always'
-alias ll='ls -alth'
-#alias dir='dir --color=always'
-#alias vdir='vdir --color=always'
+# Set up .inputrc
+if [ ! -f $HOME/.inputrc ]; then
+  bind -f  $HOME/.inputrc
+fi
 
-alias grep='grep --color=always'
-alias fgrep='fgrep --color=always'
-alias egrep='egrep --color=always'
+# Set up bash prompt
+if [ -f $HOME/.bash_prompt ]; then
+    . $HOME/.bash_prompt
+fi
 
-# See only your processess in htop
-alias htopme="htop -u $(whoami)"
+# Set up aliases
+if [ -f $HOME/.bash_aliases ]; then
+    . $HOME/.bash_aliases
+fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# Set up custom functions
+if [ -f $HOME/.bash_functions ]; then
+    . $HOME/.bash_functions
+fi
+
+# Set up sensitive information
+if [[ ! -d "$HOME/.private_info" ]]; then
+  . $HOME/.private_info
+fi
+
+# Enable programmable completion features (you don't need to enable this, if it's already enabled in /etc/bash.bashrc and /etc/profile)
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# Set up .tmux.conf
-
-if [[ ! -f ~/.tmux.conf ]]; then
-  if [[ `tmux -V` < 3  ]]; then
-    cat << "EOT" >> ~/.tmux.conf
-set -g base-index 1
-
-# Automatically set window title
-set-window-option -g automatic-rename on
-set-option -g set-titles on
-
-#set -g default-terminal screen-256color
-set -g status-keys vi
-
-setw -g monitor-activity on
-
-bind-key v split-window -h
-bind-key s split-window -v
-
-bind-key J resize-pane -D 5
-bind-key K resize-pane -U 5
-bind-key H resize-pane -L 5
-bind-key L resize-pane -R 5
-
-bind-key M-j resize-pane -D
-bind-key M-k resize-pane -U
-bind-key M-h resize-pane -L
-bind-key M-l resize-pane -R
-
-# Vim style pane selection
-bind h select-pane -L
-bind j select-pane -D
-bind k select-pane -U
-bind l select-pane -R
-
-# Use Alt-vim keys without prefix key to switch panes
-bind -n M-h select-pane -L
-bind -n M-j select-pane -D
-bind -n M-k select-pane -U
-bind -n M-l select-pane -R
-
-# Use Alt-arrow keys without prefix key to switch panes
-bind -n M-Left select-pane -L
-bind -n M-Right select-pane -R
-bind -n M-Up select-pane -U
-bind -n M-Down select-pane -D
-
-# Shift arrow to switch windows
-bind -n S-Left  previous-window
-bind -n S-Right next-window
-
-# No delay for escape key press
-set -sg escape-time 0
-
-# THEME
-set -g status-bg black
-set -g status-fg white
-set -g window-status-current-bg white
-set -g window-status-current-fg black
-set -g window-status-current-attr bold
-set -g status-interval 60
-set -g status-left-length 30
-set -g status-left '#[fg=green](#S) #(whoami)'
-set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]'
-
-# Enabling mouse scroll when accessing VIM from a tmux window (https://stackoverflow.com/questions/51639540/tmux-scroll-mode-vim-keybindings)
-set-window-option -g mode-keys vi
-bind-key -T copy-mode-vi v send -X begin-selection
-bind-key -T copy-mode-vi V send -X select-line
-bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
-
-# Increasing buffer size so that created panes have more to scroll bak. BEware this might take a lot of RAM if too many panes are open
-set -g history-limit 80000
-
-# Enable mouse integration letting you copy from a pane with your mouse without having to zoom
-set -g mouse on
-bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
-bind -n WheelDownPane select-pane -t= \; send-keys -M
-bind -n C-WheelUpPane select-pane -t= \; copy-mode -e \; send-keys -M
-bind -T copy-mode-vi    C-WheelUpPane   send-keys -X halfpage-up
-bind -T copy-mode-vi    C-WheelDownPane send-keys -X halfpage-down
-bind -T copy-mode-emacs C-WheelUpPane   send-keys -X halfpage-up
-bind -T copy-mode-emacs C-WheelDownPane send-keys -X halfpage-down
-
-# To copy, left click and drag to highlight text in yellow,
-# once you release left click yellow text will disappear and will automatically be available in clibboard
-# # Use vim keybindings in copy mode
-setw -g mode-keys vi
-# Update default binding of `Enter` to also use copy-pipe
-unbind -T copy-mode-vi Enter
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -selection c"
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -in -selection clipboard"
-
-# Reload tmux config
-bind r source-file ~/.tmux.conf
-EOT
-  else
-    cat << "EOT" >> ~/.tmux.conf
-### Default
-activity-action other
-assume-paste-time 1
-base-index 0
-bell-action any
-default-command ""
-default-shell "/bin/bash"
-destroy-unattached off
-detach-on-destroy on
-display-panes-active-colour red
-display-panes-colour blue
-display-panes-time 1000
-display-time 750
-history-limit 2000
-key-table "root"
-lock-after-time 0
-lock-command "lock -np"
-message-command-style fg=yellow,bg=black
-message-style fg=black,bg=yellow
-mouse off
-prefix C-b
-prefix2 None
-renumber-windows off
-repeat-time 500
-set-titles off
-set-titles-string "#S:#I:#W - \"#T\" #{session_alerts}"
-silence-action other
-status on
-status-interval 15
-status-justify left
-status-keys emacs
-status-left "[#S] "
-status-left-length 10
-status-left-style default
-status-position bottom
-status-right " \"#{=21:pane_title}\" %H:%M %d-%b-%y"
-status-right-length 40
-status-right-style default
-status-style fg=black,bg=green
-update-environment[0] "DISPLAY"
-update-environment[1] "SSH_ASKPASS"
-update-environment[2] "SSH_AUTH_SOCK"
-update-environment[3] "SSH_AGENT_PID"
-update-environment[4] "SSH_CONNECTION"
-update-environment[5] "WINDOWID"
-update-environment[6] "XAUTHORITY"
-visual-activity off
-visual-bell off
-visual-silence off
-word-separators " -_@"
-EOT
-  fi
-
-fi
-
-# Custom functions
-## Extract
-function extract {
- if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-    return 1
- else
-    for n in $@
-    do
-      if [ -f "$n" ] ; then
-          case "${n%,}" in
-            *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-                         tar xvf "$n"       ;;
-            *.lzma)      unlzma ./"$n"      ;;
-            *.bz2)       bunzip2 ./"$n"     ;;
-            *.rar)       unrar x -ad ./"$n" ;;
-            *.gz)        gunzip ./"$n"      ;;
-            *.zip)       unzip ./"$n"       ;;
-            *.z)         uncompress ./"$n"  ;;
-            *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
-                         7z x ./"$n"        ;;
-            *.xz)        unxz ./"$n"        ;;
-            *.exe)       cabextract ./"$n"  ;;
-            *)
-                         echo "extract: '$n' - unknown archive method"
-                         return 1
-                         ;;
-          esac
-      else
-          echo "'$n' - file does not exist"
-          return 1
-      fi
-    done
-fi
-}
-
-## a
-function a {
-[[ $# -lt 1 ]] || [[ $1 == "-h" ]] && {
-    echo ""
-    echo "description: routine to speed up editing of executable files on bash."
-    echo "       usage: a [file_name]";
-    echo "       example: a toyfile.sh";
-    echo ""
-    return 1;
-}
-
-FILENAME=$1
-if [[ -f "${FILENAME}" ]]; then
-  rm ${FILENAME}; vim -c 'startinsert' ${FILENAME}; chmod 755 ${FILENAME}
-else
-  vim -c 'startinsert' ${FILENAME}; chmod 755 ${FILENAME}
-fi
-}
-
-## wsummary
-function wsummary {
-[[ $# -lt 1 ]] || [[ $1 == "-h" ]] && {
-    echo ""
-    echo "description: produces a summary of the weight of all files matching a glob expansion in the current directory."
-    echo "       usage: wsummary [glob_expression_in_double_quotes]";
-    echo "       example: wsummary \"*.bam\"";
-    echo ""
-    return 1;
-}
-
-GLOB=$1
-find ./ -name "${GLOB}" -ls | awk '{if(min==""){min=max=$7}; if($7>max) {max=$7}; if($7<min) {min=$7}; {sum += $7; n++;}} END {print "mean="sum/n, "n="n, "min="min, "max="max}'
-}
-
-## nbytext
-function nbytext {
-[[ $# -lt 1 ]] || [[ $1 == "-h" ]] && {
-    echo ""
-    echo "description: outputs the number of files per each extension at provided extension resolution in provided directory."
-    echo "       usage: nbytext [directory] [optional_resolution default=1]";
-    echo "       example: nbytext \".\" from the last dot to the end";
-    echo "       example: nbytext \".\" 2 from the second to last dot to the end";
-    echo "       example: nbytext \".\" 3 from the third to last dot to the end";
-    echo ""
-    return 1;
-}
-
-DIR="$1"
-EXTENSION="${2:- 1}"
-find ${DIR} -maxdepth 1 -type f -printf '%f\n' | rev | cut -d '.' -f 1-${EXTENSION} | rev | sort | uniq -c
-}
-
-# Sensitive information
-if [[ ! -d "$HOME/.private_info" ]]; then
-  . $HOME/.private_info
 fi
 
 # Path
