@@ -1,0 +1,12 @@
+# https://askubuntu.com/a/59855/854504
+$include /etc/inputrc
+
+# https://unix.stackexchange.com/a/53844/302735
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set echo-control-characters off
+# To enable seamless pasting into python console
+set enable-bracketed-paste off
