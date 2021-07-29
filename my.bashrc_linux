@@ -63,7 +63,7 @@ if [ -f $HOME/.bash_functions ]; then
 fi
 
 # Set up sensitive information
-if [[ ! -d "$HOME/.private_info" ]]; then
+if [[ -f "$HOME/.private_info" ]]; then
   . $HOME/.private_info
 fi
 
