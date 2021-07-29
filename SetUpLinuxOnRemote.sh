@@ -88,5 +88,5 @@ if [[ ${CONDA} == "conda" ]]; then
   parallel --cite
 fi
 
-printf "All done! It's a good idea to log out and back in to enable .inputrc.\n See you later, alligator!\n"
+printf "All done! It's a good idea to log out and back in to enable .inputrc.\nSee you later, alligator!\n"
 exit 0
