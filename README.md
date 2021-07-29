@@ -1,5 +1,5 @@
-#MYDOTFILES
-Minimal coding to set up your linux working environment.
+# MYDOTFILES
+A resource to set up my linux working environment with minimal coding.
 
 ## How it works
 1. Step 1: Download and execute autosetup script
@@ -7,4 +7,4 @@ Minimal coding to set up your linux working environment.
 wget -q https://raw.githubusercontent.com/tluquez/mydotfiles/main/SetUpLinuxOnRemote.sh -O SetUpLinuxOnRemote.sh && chmod +x SetUpLinuxOnRemote.sh; ./SetUpLinuxOnRemote.sh
 ```
 
-2. Step 2: There is no step 2. You should be done already :)
+2. Step 2: There is no step 2. You should be done already :smile:.
