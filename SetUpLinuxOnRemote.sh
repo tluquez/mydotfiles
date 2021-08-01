@@ -51,10 +51,10 @@ ln -sfv $MYDOTFILES/my.vimrc $HOME/.vimrc
 if [[ ! -f $HOME/.tmux.conf ]]; then
   if [[ `tmux -V` == "tmux 2.6" ]]; then
     printf "Getting .tmux.conf version 2\n"
-    ln -sfv $MYDOTFILES/.tmux.conf.V2 $HOME/.tmux.conf
+    ln -sfv $MYDOTFILES/my.tmux.conf.V2 $HOME/.tmux.conf
   else
     printf "Getting .tmux.conf version 3\n"
-    ln -sfv $MYDOTFILES/.tmux.conf.V3 $HOME/.tmux.conf
+    ln -sfv $MYDOTFILES/my.tmux.conf.V3 $HOME/.tmux.conf
   fi
 fi
 
@@ -119,7 +119,7 @@ if [[ ${CONDA} == "conda" ]]; then
     conda config --add channels bioconda
 
     printf "Installing basic packages: samtools bedops parallel bcftools bedtools boto3 libopenblas\n"
-    conda install -y samtools bedops parallel bcftools bedtools boto3 libopenblas
+    conda install -q -y samtools parallel bedops bcftools bedtools boto3 libopenblas
 fi
 
 printf "\nSourcing .bashrc and .tmux.conf\n\n"
