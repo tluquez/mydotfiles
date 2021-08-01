@@ -10,7 +10,7 @@ printf "\nLet's begging setting up your bash environment baby!!!\n"
 printf "**** Remember this script overwrites any previous files or symlinks ****\n"
 
 # Bash version
-if [[ `echo "${BASH_VERSINFO:-0}"'<='3.9 | bc -l` == 1 ]]; then
+if [[ `echo "${BASH_VERSINFO}"'<='3.9 | bc -l` == 1 ]]; then
   echo -e "Upgrading bash\n"
   sudo apt-get install --only-upgrade bash
 fi
@@ -49,7 +49,7 @@ ln -sfv $MYDOTFILES/my.vimrc $HOME/.vimrc
 
 #Set up .tmux.conf depending on the version
 if [[ ! -f $HOME/.tmux.conf ]]; then
-  if [[ `tmux -V` < 3  ]]; then
+  if [[ `tmux -V` == "tmux 2.6" ]]; then
     printf "Getting .tmux.conf version 2\n"
     ln -sfv $MYDOTFILES/.tmux.conf.V2 $HOME/.tmux.conf
   else
@@ -122,8 +122,9 @@ if [[ ${CONDA} == "conda" ]]; then
     conda install -y samtools bedops parallel bcftools bedtools boto3 libopenblas
 fi
 
-printf "\nSourcing .bashrc\n\n"
+printf "\nSourcing .bashrc and .tmux.conf\n\n"
 . $HOME/.bashrc
+tmux source-file ~/.tmux.conf
 #bind -f  $HOME/.inputrc
 
 printf "All done! It's a good idea to log out and back in to enable .inputrc.\nSee you later, alligator!\n"
