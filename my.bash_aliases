@@ -1,5 +1,5 @@
 alias ls='ls --color=always'
-alias ll='ls -alth'
+alias ll='ls -altrh'
 alias l='ll'
 #alias dir='dir --color=always'
 #alias vdir='vdir --color=always'

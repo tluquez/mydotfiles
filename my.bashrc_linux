@@ -30,14 +30,8 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; h
 HISTSIZE=
 HISTFILESIZE=
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# Check if mybin exists if not create it
-if [[ ! -d "$HOME/mybin" ]]; then
-  mkdir -p $HOME/mybin
-fi
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then

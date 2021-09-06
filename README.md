@@ -1,4 +1,4 @@
-#MYDOTFILES
+# MYDOTFILES
 Minimal coding to set up your linux working environment.
 
 ## How it works
