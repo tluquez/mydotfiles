@@ -75,11 +75,16 @@ fi
 # Upgrade R
 if [[ ! `grep -E -q "cloud.r-project.org" /etc/apt/sources.list | echo $?` ]]; then
 	printf "\nUpgrading R\n"
-	sudo apt-get remove -qq -y r-base r-base-dev && sudo apt-get autoclean -qq -y
+	# Deleting all previous files to avoid conflicts with future libraries
+	sudo apt-get purge --auto-remove -qq -y r-base r-base-core &&
+	sudo apt-get autoclean -qq -y
+	sudo rm -Rf /usr/local/lib/R/site-library /usr/lib/R/site-library /usr/lib/R/library
+	# Setting mirror and retrieving API key
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 	sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
-	sudo apt-get install -qq -y --no-install-recommends software-properties-common dirmngr
-	sudo apt-get install -qq -y --no-install-recommends r-base r-base-dev && sudo apt-get autoclean -qq -y
+	#Installing packages
+	sudo apt-get install -qq -y --no-install-recommends r-base &&
+	sudo apt-get autoclean -qq -y
 fi
 
 # Installing miniconda according to user's preference
