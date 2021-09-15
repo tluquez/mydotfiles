@@ -7,13 +7,19 @@ CONDA=${1:-no}
 
 # Let's rock it!
 printf "\nLet's begging setting up your bash environment baby!!!\n"
-printf "**** Remember this script overwrites any previous files or symlinks ****\n"
+printf "**** Remember this script overwrites any previous files or symlinks and upgrades all packages in the OS ****\n"
 
 # Bash version
 if [[ `echo "${BASH_VERSINFO}"'<='3.9 | bc -l` == 1 ]]; then
 	echo -e "Upgrading bash\n"
 	sudo apt-get install --only-upgrade bash
 fi
+
+# Upgrade basic linux packages
+sudo apt-get update -qq -y
+sudo apt-get dist-upgrade -qq -y
+sudo apt-get autoclean -qq -y
+sudo apt-get check
 
 # Git clone mydotfiles
 MYDOTFILES="$HOME/mydotfiles"
