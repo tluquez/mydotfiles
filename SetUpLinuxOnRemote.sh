@@ -31,7 +31,7 @@ else
 fi
 
 # Symlink dot files
-printf "Your symlinks are:\n"
+printf "\nYour symlinks are:\n"
 ln -sfv $MYDOTFILES/my.bashrc_linux $HOME/.bashrc
 ln -sfv $MYDOTFILES/my.bash_profile $HOME/.bash_profile
 ln -sfv $MYDOTFILES/my.bash_prompt $HOME/.bash_prompt
@@ -73,11 +73,13 @@ if [[ ! -d "$HOME/mybin" ]]; then
 fi
 
 # Upgrade R
-if [[ `grep -E -q "cloud.r-project.org" /etc/apt/sources.list | echo $?` ]]; then
-	printf "Upgrading R\n"
+if [[ ! `grep -E -q "cloud.r-project.org" /etc/apt/sources.list | echo $?` ]]; then
+	printf "\nUpgrading R\n"
+	sudo apt-get remove -qq -y r-base r-base-dev && sudo apt-get autoclean -qq -y
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-	sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
-	sudo apt-get install r-base r-base-dev
+	sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+	sudo apt-get install -qq -y --no-install-recommends software-properties-common dirmngr
+	sudo apt-get install -qq -y --no-install-recommends r-base r-base-dev && sudo apt-get autoclean -qq -y
 fi
 
 # Installing miniconda according to user's preference
