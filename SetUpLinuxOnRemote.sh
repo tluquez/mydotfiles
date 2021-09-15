@@ -72,6 +72,14 @@ if [[ ! -d "$HOME/mybin" ]]; then
 	mkdir -p $HOME/mybin
 fi
 
+# Upgrade R
+if [[ `grep -E -q "cloud.r-project.org" /etc/apt/sources.list | echo $?` ]]; then
+	printf "Upgrading R\n"
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+	sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
+	sudo apt-get install r-base r-base-dev
+fi
+
 # Installing miniconda according to user's preference
 if [[ ${CONDA} == "conda" ]]; then
 	printf "\nLet's rock miniconda!\n"
