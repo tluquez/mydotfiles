@@ -130,7 +130,7 @@ fi
 
 printf "\nSourcing .bashrc and .tmux.conf\n\n"
 . $HOME/.bashrc
-tmux source-file ~/.tmux.conf
+#tmux source-file ~/.tmux.conf
 #bind -f  $HOME/.inputrc
 
 printf "All done! It's a good idea to log out and back in to enable .inputrc.\nSee you later, alligator!\n"
