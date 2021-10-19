@@ -1,5 +1,5 @@
 # MYDOTFILES
-Minimal coding to set up your linux working environment.
+Minimal coding to set up your linux working environment. Note `SetUpLinuxOnRemote.sh` assumes that it is run by a sudo user.
 
 ## How it works
 1. Step 1: Download and execute autosetup script

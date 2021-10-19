@@ -83,7 +83,7 @@ if [[ ! `grep -E -q "cloud.r-project.org" /etc/apt/sources.list | echo $?` ]]; t
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 	sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
 	#Installing packages
-	sudo apt-get install -qq -y r-base r-base-dev &&
+	sudo apt-get install -qq -y r-base r-base-dev libcairo2-dev libxt-dev &&
 	sudo apt-get autoclean -qq -y
 fi
 

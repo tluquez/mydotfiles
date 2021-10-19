@@ -7,7 +7,7 @@ case $- in
       *) return;;
 esac
 
-# Set vim as default editor; start vim in insert mode
+# Set vim as default editor
 export EDITOR=vim
 
 # Set settings for less
