@@ -106,10 +106,10 @@ if [[ ${CONDA} == "conda" ]]; then
 
 		# Let's config and install some packages
 		conda config --set auto_activate_base false
-		conda config --add channels conda-forge
 		conda config --add channels defaults
 		conda config --add channels r
 		conda config --add channels bioconda
+		conda config --add channels conda-forge
 
 		printf "Installing basic packages: samtools bedops parallel bcftools bedtools boto3 libopenblas\n"
 		conda install -y samtools bedops parallel bcftools bedtools boto3 libopenblas
@@ -134,10 +134,10 @@ elif [[ ${CONDA} == "conda_reinstall" ]]; then
 
 	# Let's config and install some packages
 	conda config --set auto_activate_base false
-	conda config --add channels conda-forge
 	conda config --add channels defaults
 	conda config --add channels r
 	conda config --add channels bioconda
+	conda config --add channels conda-forge
 
 	printf "Installing basic packages: samtools bedops parallel bcftools bedtools boto3 libopenblas\n"
 	conda install -q -y samtools parallel bedops bcftools bedtools boto3 libopenblas
